@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Minishlink\WebPush;
 
-use Base64Url\Base64Url;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Base64Url\Base64Url;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
 class WebPush
 {
@@ -74,15 +74,15 @@ class WebPush
             'mbstring' => '[WebPush] mbstring extension is not loaded but is required for sending push notifications with payload or for VAPID authentication. You can fix this in your php.ini.',
             'openssl' => '[WebPush] openssl extension is not loaded but is required for sending push notifications with payload or for VAPID authentication. You can fix this in your php.ini.',
         ];
-        foreach ($extensions as $extension => $message) {
-            if (!extension_loaded($extension)) {
-                trigger_error($message, E_USER_WARNING);
-            }
-        }
+        // foreach ($extensions as $extension => $message) {
+        //     if (!extension_loaded($extension)) {
+        //         trigger_error($message, E_USER_WARNING);
+        //     }
+        // }
 
-        if (ini_get('mbstring.func_overload') >= 2) {
-            trigger_error("[WebPush] mbstring.func_overload is enabled for str* functions. You must disable it if you want to send push notifications with payload or use VAPID. You can fix this in your php.ini.", E_USER_NOTICE);
-        }
+        // if (ini_get('mbstring.func_overload') >= 2) {
+        //     trigger_error("[WebPush] mbstring.func_overload is enabled for str* functions. You must disable it if you want to send push notifications with payload or use VAPID. You can fix this in your php.ini.", E_USER_NOTICE);
+        // }
 
         if (isset($auth['VAPID'])) {
             $auth['VAPID'] = VAPID::validate($auth['VAPID']);
